@@ -6,12 +6,10 @@ contract ID is mortal{
     using strings for *;
     mapping (bytes32 => string) attributes;
     bytes32[] storedAttributes;
-    uint attrCount = 0;
     
     function addAttribute(bytes32 key, string attrLocation) onlyowner returns (string){
         attributes[key] = attrLocation;
         storedAttributes.push(key);
-        attrCount++;
         return attributes[key];
     }
     
@@ -27,17 +25,20 @@ contract ID is mortal{
         
         return retValue;
     }
-    function removeAllAttributes() {
+    
+    function removeAllAttributes(){
         bytes32 key;
         uint initialLength = storedAttributes.length;
-        for(uint i=0;i<attrCount;i++){
+        
+        for(uint i=0; i<storedAttributes.length; i++){
             key = storedAttributes[i];
             removeAttribute(key);
-            delete storedAttributes[i];
-            if(attributes[key].toSlice().len()!=0||storedAttributes.length!=initialLength-i){
+            
+            if(attributes[key].toSlice().len() != 0){
                 throw;
             }
         }
-        attrCount=0;
+        
+        delete storedAttributes;
     }
 }
