@@ -5,7 +5,7 @@ import "strings.sol";
 contract ID is mortal{
     using strings for *;
     mapping (bytes32 => string) attributes;
-    bytes32[] attributesKeys;
+    public bytes32[] attributesKeys;
     
     function addAttribute(bytes32 key, string attrLocation) onlyowner returns (string){
         attributes[key] = attrLocation;
