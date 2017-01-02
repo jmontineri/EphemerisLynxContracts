@@ -1,7 +1,9 @@
 pragma solidity ^0.4.2;
 import "std.sol";
+import "strings.sol";
 
 contract ID is mortal{
+    using strings for *;
     mapping (bytes32 => string) attributes;
     bytes32[] storedAttributes;
     uint attrCount = 0;
@@ -24,6 +26,7 @@ contract ID is mortal{
         
         return retValue;
     }
+    
     function removeAllAttributes() {
         bytes32 key;
         uint initialLength = storedAttributes.length;
@@ -31,7 +34,7 @@ contract ID is mortal{
             key = storedAttributes[i];
             removeAttribute(key);
             delete storedAttributes[i];
-            if(attributes[key]!=0||storedAttributes.length!=initialLength-i){
+            if(attributes[key].toSlice().len() != 0 || storedAttributes.length!=initialLength-i){
                 throw;
             }
         }
