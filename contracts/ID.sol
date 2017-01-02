@@ -5,11 +5,11 @@ import "strings.sol";
 contract ID is mortal{
     using strings for *;
     mapping (bytes32 => string) attributes;
-    bytes32[] storedAttributes;
+    bytes32[] attributesKeys;
     
     function addAttribute(bytes32 key, string attrLocation) onlyowner returns (string){
         attributes[key] = attrLocation;
-        storedAttributes.push(key);
+        attributesKeys.push(key);
         return attributes[key];
     }
     
@@ -28,10 +28,10 @@ contract ID is mortal{
     
     function removeAllAttributes(){
         bytes32 key;
-        uint initialLength = storedAttributes.length;
+        uint initialLength = attributesKeys.length;
         
-        for(uint i=0; i<storedAttributes.length; i++){
-            key = storedAttributes[i];
+        for(uint i=0; i<attributesKeys.length; i++){
+            key = attributesKeys[i];
             removeAttribute(key);
             
             if(attributes[key].toSlice().len() != 0){
@@ -39,6 +39,6 @@ contract ID is mortal{
             }
         }
         
-        delete storedAttributes;
+        delete attributesKeys;
     }
 }
