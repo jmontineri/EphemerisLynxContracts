@@ -7,7 +7,7 @@ contract IDController is owned {
     function IDController(ID _id){
         id = _id;    
     }
-    function removeAttribute(bytes32 key) onlyowner returns (string){
+    function removeAttribute(bytes32 key) onlyowner returns (Attribute){
         return id.removeAttribute(key);
     }
     
@@ -15,11 +15,11 @@ contract IDController is owned {
        id.removeAllAttributes();
     }
     
-    function addAttribute(bytes32 key, string attrLocation) onlyowner returns (string){
+    function addAttribute(bytes32 key, string attrLocation) onlyowner returns (Attribute){
         return id.addAttribute(key, attrLocation);
     }
     
-    function getAttributeLocation(bytes32 key) returns (string){
+    function getAttributeLocation(bytes32 key) returns (Attribute){
         return id.getAttributeLocation(key);
     }
     
