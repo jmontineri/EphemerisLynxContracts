@@ -13,12 +13,13 @@ contract ID is mortal{
         return attributes[key];
     }
     
-    function getAttribute(bytes32 key) returns (string){
+    function getAttributeLocation(bytes32 key) returns (string){
         return attributes[key];
     }
     
-    function removeAttribute(bytes32 key) returns (string){
-        string retValue = attributes[key];
+    function removeAttribute(bytes32 key) onlyowner returns (string){
+        //todo: to reduce cost, try with storage variable
+        var retValue = attributes[key].toSlice().copy().toString();
         
        // remove value
         attributes[key] = "";
@@ -26,7 +27,7 @@ contract ID is mortal{
         return retValue;
     }
     
-    function removeAllAttributes(){
+    function removeAllAttributes() onlyowner{
         bytes32 key;
         uint initialLength = attributesKeys.length;
         
