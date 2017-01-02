@@ -19,8 +19,8 @@ contract IDController is owned {
         return id.addAttribute(key, attrLocation);
     }
     
-    function getAttributeLocation(bytes32 key) returns (Attribute){
-        return id.getAttributeLocation(key);
+    function getAttribute(bytes32 key) returns (Attribute){
+        return id.getAttribute(key);
     }
     
     function deleteID() onlyowner{

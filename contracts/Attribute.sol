@@ -4,7 +4,7 @@ contract Attribute is owned{
     string location;
     
     function Attribute(string _location){
-        setLocation(_location)
+        setLocation(_location);
     }
     
     function setLocation(string _location) onlyowner{
