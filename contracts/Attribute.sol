@@ -1,9 +1,17 @@
 pragma solidity ^0.4.2;
 import "std.sol";
-contract Attribute {
-    string value;
-    function Attribute(string _value){
-        value = _value;
+contract Attribute is owned{
+    string location;
+    
+    function Attribute(string _location){
+        setLocation(_location)
     }
-    //function
+    
+    function setLocation(string _location) onlyowner{
+        location = _location;
+    }
+    
+    function getLocation() returns (string){
+        return location;
+    }
 }

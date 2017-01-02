@@ -14,7 +14,7 @@ contract ID is mortal{
         return attributes[key];
     }
     
-    function getAttributeLocation(bytes32 key) returns (Attribute){
+    function getAttribute(bytes32 key) returns (Attribute){
         return attributes[key];
     }
     
