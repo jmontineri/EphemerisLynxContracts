@@ -1,4 +1,4 @@
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.7;
 import "std.sol";
 import "ID.sol";
 import "IDController.sol";
@@ -9,7 +9,7 @@ contract Factory is owned {
         newID.changeOwner(msg.sender);
         return  createIDController(newID, msg.sender);
     }
-    
+
     function createIDController (ID id, address sender) private returns (IDController){
         IDController idController = new IDController(id);
         id.changeOwner(idController);
@@ -17,4 +17,3 @@ contract Factory is owned {
         return idController;
     }
 }
-

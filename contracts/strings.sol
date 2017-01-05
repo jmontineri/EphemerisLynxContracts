@@ -33,7 +33,7 @@
  *      `s.splitNew('.')` leaves s unmodified, and returns two values
  *      corresponding to the left and right parts of the string.
  */
- pragma solidity ^0.4.2;
+pragma solidity ^0.4.2;
 library strings {
     struct slice {
         uint _len;
