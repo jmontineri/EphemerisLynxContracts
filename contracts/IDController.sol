@@ -1,5 +1,5 @@
 pragma solidity ^0.4.7;
-import "std.sol";
+import "owned.sol";
 import "ID.sol";
 
 contract IDController is owned {

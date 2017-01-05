@@ -1,5 +1,5 @@
 pragma solidity ^0.4.7;
-import "std.sol";
+import "owned.sol";
 contract Attribute is owned{
     string location;
 

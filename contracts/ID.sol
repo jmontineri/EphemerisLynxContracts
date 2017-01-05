@@ -1,5 +1,5 @@
 pragma solidity ^0.4.7;
-import "std.sol";
+import "mortal.sol";
 import "strings.sol";
 import "Attribute.sol";
 
