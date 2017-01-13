@@ -19,12 +19,13 @@ contract('FactoryTest', function(accounts) {
         if (error == null) {
           //get the IDController contract
           var idController = IDController.at(result.args._controllerAddress);
-
+          console.log("!!!!!!! "+result.args._controllerAddress);
           //Test if we can if the Contract type is indeed IDController
           //by calling a function on the contract and see if it succeeds
           return idController.getAttribute.call("testKey").then(function(){
             assert.isTrue(true);
           }).catch(function(e){
+            console.log(e);
             assert.isTrue(false);
           });
         } else {
