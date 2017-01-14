@@ -14,17 +14,18 @@ contract ID is mortal{
         return attributes[key];
     }
 
-    function getAttribute(bytes32 key) returns (Attribute){
+    function getAttribute(bytes32 key) constant returns (Attribute){
+
         return attributes[key];
     }
 
     function removeAttribute(bytes32 key) onlyowner returns (Attribute){
-        //todo: to reduce cost, try with storage variable
-        //var retValue = attributes[key].toSlice().copy().toString();
-
-       // remove value
         delete attributes[key];
-
+        /*for(uint i = 0;i < attributesKeys.length;i++){
+            if(attributesKeys[i]==key){
+                remove(i);
+            }
+        }*/
         return attributes[key];
     }
 
@@ -43,4 +44,15 @@ contract ID is mortal{
 
         delete attributesKeys;
     }
+    
+    /*function remove(uint index)  returns(bytes32[]) {
+        if (index >= attributesKeys.length) return;
+
+        for (uint i = index; i<attributesKeys.length-1; i++){
+            attributesKeys[i] = attributesKeys[i+1];
+        }
+        delete attributesKeys[attributesKeys.length-1];
+        attributesKeys.length--;
+        return attributesKeys;
+    }*/
 }

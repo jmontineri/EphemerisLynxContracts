@@ -1,17 +1,18 @@
 pragma solidity ^0.4.7;
 import "owned.sol";
 contract Attribute is owned{
-    string location;
-
+    string aLocation;
+    address public owner;
     function Attribute(string _location){
         setLocation(_location);
+        owner = msg.sender;
     }
 
     function setLocation(string _location) onlyowner{
-        location = _location;
+        aLocation = _location;
     }
 
-    function getLocation() returns (string){
-        return location;
+    function getLocation() constant returns (string){
+        return aLocation;
     }
 }
