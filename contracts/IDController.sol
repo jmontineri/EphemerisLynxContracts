@@ -1,14 +1,14 @@
 pragma solidity ^ 0.4 .7;
 import "Owned.sol";
 import "ID.sol";
+import "Watchdog.sol";
 
 contract IDController is Owned {
     ID id;
-    address watchdog;
+    Watchdog watchdogs;
 
     function IDController(ID _id) {
         id = _id;
-        wa
     }
 
     function removeAttribute(bytes32 key) onlyowner returns(Attribute) {
@@ -31,12 +31,27 @@ contract IDController is Owned {
         id.kill();
         if (msg.sender == owner) suicide(owner);
     }
-
-    function changeWatchDogContract(address newContract) onlyowner {
-        watchdog = newContract;
+    
+    function createAndSetWatchDogs(address[] _owners, uint _required) onlyowner returns (Watchdog){
+        watchdogs = new Watchdog(_owners, _required);
+        //assign the owner of the watchdog
+        watchdogs.changeOwner(owner);
+        return watchdogs;
+    }
+    
+    function getWatchDogs() returns (Watchdog){
+        return watchdogs;
+    }
+    
+    function getID() returns (ID){
+        return id;
+    }
+    
+    function changeWatchDogs(Watchdog newContract) onlyowner {
+        watchdogs = newContract;
     }
     
     modifier onlyowner() {
-        if (msg.sender == owner || msg.sender == watchdog) _;
+        if (msg.sender == owner || msg.sender == address(watchdogs)) _;
     }
 }
