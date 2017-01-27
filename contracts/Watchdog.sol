@@ -21,19 +21,13 @@ contract Watchdog is IMultisig, MultiOwned {
 
     // METHODS
 
-    // constructor - just pass on the owner array to the multiowned and
-    // the limit to daylimit
+    // constructor - just pass on the owner array to the multiowned
     function Watchdog(address[] _owners, uint _required)
             MultiOwned(_owners, _required) {
     }
     
-    // kills the contract sending everything to `_to`.
-    function kill(address _to) onlymanyowners(sha3(msg.data)) external {
-        suicide(_to);
-    }
-    
-    // Outside-visible transact entry point. Executes transaction immediately if below daily spend limit.
-    // If not, goes into multisig process. We provide a hash on return to allow the sender to provide
+    // Outside-visible transact entry point. Executes transaction using multisig process. 
+    // We provide a hash on return to allow the sender to provide
     // shortcuts for the other confirmations (allowing them to avoid replicating the _to, _value
     // and _data arguments).
     function propose(address _destination, uint _value, bytes _data) external onlyoneowner returns (bytes32 _r) {
@@ -80,6 +74,7 @@ contract Watchdog is IMultisig, MultiOwned {
         if(proposal.hash != _h)
             throw;
         
+        //make sure only the initiator can cancel the proposal
         if (proposal.initiator == msg.sender) {
             clearPending();
             return true;
