@@ -18,7 +18,7 @@ contract Factory is Owned {
 
     function createIDController (ID id, address sender) private returns (IDController){
         IDController idController = new IDController(id);
-        gitid.changeOwner(idController);
+        id.changeOwner(idController);
         idController.changeOwner(sender);
         return idController;
     }
