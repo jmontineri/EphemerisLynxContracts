@@ -1,6 +1,6 @@
 pragma solidity ^0.4.7;
-import "owned.sol";
-contract mortal is owned {
+import "Owned.sol";
+contract mortal is Owned {
   function kill() onlyowner {
     if (msg.sender == owner) suicide(owner);
   }

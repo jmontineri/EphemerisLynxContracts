@@ -1,7 +1,7 @@
 pragma solidity ^0.4.7;
-import "owned.sol";
-contract Attribute is owned{
-    string location;
+import "Owned.sol";
+contract Attribute is Owned{
+    string private location;
 
     function Attribute(string _location){
         setLocation(_location);
