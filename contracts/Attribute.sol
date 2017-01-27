@@ -11,7 +11,7 @@ contract Attribute is Owned{
         location = _location;
     }
 
-    function getLocation() returns (string){
+    function getLocation() constant returns (string){
         return location;
     }
 }

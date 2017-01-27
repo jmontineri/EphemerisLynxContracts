@@ -14,17 +14,13 @@ contract ID is mortal{
         return attributes[key];
     }
 
-    function getAttribute(bytes32 key) returns (Attribute){
+    function getAttribute(bytes32 key) constant returns (Attribute){
+
         return attributes[key];
     }
 
     function removeAttribute(bytes32 key) onlyowner returns (Attribute){
-        //todo: to reduce cost, try with storage variable
-        //var retValue = attributes[key].toSlice().copy().toString();
-
-       // remove value
         delete attributes[key];
-
         return attributes[key];
     }
 
@@ -43,6 +39,4 @@ contract ID is mortal{
 
         delete attributesKeys;
     }
-    
-    //proxy function???
 }
