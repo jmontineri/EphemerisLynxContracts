@@ -32,13 +32,6 @@ contract IDController is Owned {
         if (msg.sender == owner) suicide(owner);
     }
     
-    function createAndSetWatchDogs(address[] _owners, uint _required) onlyowner returns (Watchdog){
-        watchdogs = new Watchdog(_owners, _required);
-        //assign the owner of the watchdog
-        watchdogs.changeOwner(owner);
-        return watchdogs;
-    }
-    
     function getWatchDogs() returns (Watchdog){
         return watchdogs;
     }
@@ -47,7 +40,7 @@ contract IDController is Owned {
         return id;
     }
     
-    function changeWatchDogs(Watchdog newContract) onlyowner {
+    function setWatchDogs(Watchdog newContract) onlyowner {
         watchdogs = newContract;
     }
     
