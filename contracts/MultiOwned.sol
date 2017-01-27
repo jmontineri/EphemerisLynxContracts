@@ -76,7 +76,7 @@ contract MultiOwned is Owned{
             m_owners[2 + i] = uint(_owners[i]);
             m_ownerIndex[uint(_owners[i])] = 2 + i;
         }
-        m_required = _required //TODO: should the minimum be 1
+        m_required = _required; //TODO: should the minimum be 1
     }
     
     // Revokes a prior confirmation of the given operation
