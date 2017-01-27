@@ -29,7 +29,7 @@ contract IDController is Owned {
 
     function deleteID() onlyowner {
         id.kill();
-        if (msg.sender == owner) suicide(owner);
+        suicide(owner);
     }
     
     function getWatchDogs() returns (Watchdog){
