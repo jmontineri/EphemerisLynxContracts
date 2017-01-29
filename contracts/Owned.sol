@@ -11,6 +11,10 @@ contract Owned {
     owner = newOwner;
   }
   
+  function getOwner() constant returns (address){
+    return owner;
+  }
+  
   modifier onlyowner() {
     if (msg.sender == owner) _;
   }
