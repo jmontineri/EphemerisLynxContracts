@@ -1,11 +1,10 @@
-contract('FactoryTest', function(accounts) {
+contract('Factory', function(accounts) {
   it("createID() should return a contract of type IDController", function(done) {
     var factory = Factory.deployed();
-
+    //Watch for the event of ID creation
+    var returnIDControllerEvent = factory.ReturnIDController();
+    
     return factory.createID().then(function(tx){
-
-      //Watch for the event with created by the transaction we just made
-      var returnIDControllerEvent = factory.ReturnIDController({transactionHash: tx});
       return returnIDControllerEvent;
 
     }).then(function(event){
@@ -17,20 +16,27 @@ contract('FactoryTest', function(accounts) {
       return event.watch(function(error, result){
 
         if (error == null) {
+          
           //get the IDController contract
           var idController = IDController.at(result.args._controllerAddress);
-          console.log("!!!!!!! "+result.args._controllerAddress);
+        
           //Test if we can if the Contract type is indeed IDController
           //by calling a function on the contract and see if it succeeds
           return idController.getAttribute.call("testKey").then(function(){
             assert.isTrue(true);
           }).catch(function(e){
-            console.log(e);
             assert.isTrue(false);
+            console.log(e);
+            throw "Failure: unable to call function on contract";
+            done();
           });
+          
         } else {
           //if there is an error, fail the test
           assert.isTrue(false);
+          console.log(e);
+          throw "Failure: Event watch error 1";
+          done();
         }
       });
     }).then(function(event){
@@ -40,7 +46,7 @@ contract('FactoryTest', function(accounts) {
       /////////////
 
       //start watching
-      event.watch(function(error, result){
+      return event.watch(function(error, result){
         if (error == null) {
           //Try to instantiate as the IDController contract as an Attribute contract
           var fakeAttribute = Attribute.at(result.args._controllerAddress);
@@ -51,6 +57,8 @@ contract('FactoryTest', function(accounts) {
             //if we can call the function, then the test should fail
             assert.isTrue(false);
             event.stopWatching();
+            console.log(e);
+            throw "Failure: Test was able to call the function on the contract";
             done();
           }).catch(function(e){
             //if we can't call the function then the test pass
@@ -62,9 +70,13 @@ contract('FactoryTest', function(accounts) {
           //if there is an error, fail the test
           assert.isTrue(false);
           event.stopWatching();
+          console.log(e);
+          throw "Failure: Event watch error 2";
           done();
         }
       });
     });
   });
 });
+
+
