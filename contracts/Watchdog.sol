@@ -31,15 +31,7 @@ contract Watchdog is IMultisig, MultiOwned {
     // shortcuts for the other confirmations (allowing them to avoid replicating the _to, _value
     // and _data arguments).
     function propose(address _destination, uint _value, bytes _data) external onlyoneowner returns (bytes32 _r) {
-        
-        // If a contract tries to CALL or CREATE a contract with either
-    	// (i) insufficient balance, or (ii) stack depth already at maximum (1024),
-    	// the sub-execution and transfer do not occur at all, no gas gets consumed, and 0 is added to the stack.
-    	// see: https://github.com/ethereum/wiki/wiki/Subtleties#exceptional-conditions
-        if (!_destination.call.value(_value)(_data)) {
-            throw;
-        }
-        
+
         // determine our operation hash.
         _r = sha3(msg.data, block.number);
         
@@ -58,6 +50,11 @@ contract Watchdog is IMultisig, MultiOwned {
         
         if (proposal.destination != 0) {
             
+            ///////// Attemp to forward the transaction /////////
+            // Note: If a contract tries to CALL or CREATE a contract with either
+    	    // (i) insufficient balance, or (ii) stack depth already at maximum (1024),
+        	// the sub-execution and transfer do not occur at all, no gas gets consumed, and 0 is added to the stack.
+    	    // see: https://github.com/ethereum/wiki/wiki/Subtleties#exceptional-conditions
             if(!proposal.destination.call.value(proposal.value)(proposal.data))
                 throw;
                 
