@@ -8,10 +8,10 @@ contract ID is mortal{
     mapping (bytes32 => Attribute ) attributes;
     bytes32[] public attributesKeys;
 
-    function addAttribute(bytes32 key, string attrLocation) onlyowner returns (Attribute){
-        attributes[key] = new Attribute(attrLocation);
+    function addAttribute(bytes32 key, Attribute attr) onlyowner returns (bool){
+        attributes[key] = attr;
         attributesKeys.push(key);
-        return attributes[key];
+        return attributes[key] == attr;
     }
 
     function getAttribute(bytes32 key) constant returns (Attribute){

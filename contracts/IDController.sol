@@ -2,6 +2,7 @@ pragma solidity ^ 0.4 .7;
 import "Owned.sol";
 import "ID.sol";
 import "Watchdog.sol";
+import "Attribute.sol";
 
 contract IDController is Owned {
     ID id;
@@ -19,8 +20,8 @@ contract IDController is Owned {
         id.removeAllAttributes();
     }
 
-    function addAttribute(bytes32 key, string attrLocation) onlyowner returns(Attribute) {
-        return id.addAttribute(key, attrLocation);
+    function addAttribute(bytes32 key, Attribute attr) onlyowner returns(bool) {
+        return id.addAttribute(key, attr);
     }
 
     function getAttribute(bytes32 key) returns(Attribute) {
