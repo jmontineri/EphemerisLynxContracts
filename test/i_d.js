@@ -1,4 +1,4 @@
-contract('ID', function(accounts) {
+/*contract('ID', function(accounts) {
   it("should create new attribute", function(done) {
     var i_d = ID.deployed();
     var newAttribute = "testAttr";
@@ -76,3 +76,4 @@ contract('ID', function(accounts) {
 
 
 });
+*/
