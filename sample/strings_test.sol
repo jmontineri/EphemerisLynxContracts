@@ -1,3 +1,4 @@
+pragma solidity ^0.4.8;
 import 'dapple/test.sol';
 import 'strings.sol';
 
