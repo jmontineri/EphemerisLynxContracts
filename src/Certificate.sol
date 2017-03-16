@@ -4,7 +4,8 @@ contract Certificate is Owned{
     string public location;
     string public hash;
     bool public revoked = false;
-    string Attribute owningAttribute;
+    Attribute public owningAttribute
+    //TODO: add expiration
     
     function Certificate(string _location, string _hash, Attribute _owningAttribute){
         location = _location;
