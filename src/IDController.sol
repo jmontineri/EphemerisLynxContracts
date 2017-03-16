@@ -45,6 +45,10 @@ contract IDController is Owned {
         watchdogs = newContract;
     }
     
+    function changeOwner(address newOwner) onlyowner {
+        owner = newOwner;
+    }
+    
     modifier onlyowner() {
         if (msg.sender == owner || msg.sender == address(watchdogs)) _;
     }

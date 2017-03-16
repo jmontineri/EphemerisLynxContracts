@@ -36,7 +36,7 @@ contract WatchdogTest is Test {
     
     function testProposeMigration() returns (bytes32 proposalHash){
         //assert current owner is this contract
-        assertEq(idCtrl.getOwner(), this);
+        assertEq(idCtrl.owner(), this);
         proposalHash = watchdog.proposeMigration(idCtrl, actor2);
         // test if proposal was created
         assertFalse(proposalHash == 0);
@@ -64,7 +64,7 @@ contract WatchdogTest is Test {
         //confirm, since have a m_required of 2 the operation should execute
         assertTrue(actor2.confirm(proposalHash));
         //the new owner should be actor2
-        assertEq(idCtrl.getOwner(), actor2);
+        assertEq(idCtrl.owner(), actor2);
         //TODO: test events
     }
     

@@ -18,6 +18,10 @@ contract ID is mortal{
 
         return attributes[key];
     }
+    
+    function addCertificate(Attribute attr, Certificate cert){
+        attr.addCertificate(cert);
+    }
 
     function removeAttribute(bytes32 key) onlyowner returns (Attribute){
         delete attributes[key];
@@ -38,5 +42,9 @@ contract ID is mortal{
         }
 
         delete attributesKeys;
+    }
+    
+    function changeOwner(address newOwner) onlyowner {
+        owner = newOwner;
     }
 }
