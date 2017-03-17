@@ -9,17 +9,27 @@ contract ID is mortal{
     bytes32[] public attributesKeys;
 
     function addAttribute(bytes32 key, Attribute attr) onlyowner returns (bool){
+        
+        //Ff you are not the owner of the attribute you can't add it to your id
+        if( attr.owner() != address(this))
+            throw;
+        
         attributes[key] = attr;
         attributesKeys.push(key);
         return attributes[key] == attr;
     }
 
     function getAttribute(bytes32 key) constant returns (Attribute){
-
         return attributes[key];
     }
     
+    function addCertificate(bytes32 key, Certificate cert){
+        addCertificate(getAttribute(key), cert);
+    }
+    
     function addCertificate(Attribute attr, Certificate cert){
+        if(attr.owner() != address(this))
+            throw;
         attr.addCertificate(cert);
     }
 
