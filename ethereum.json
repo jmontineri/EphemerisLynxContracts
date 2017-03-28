@@ -1,5 +1,5 @@
 {
-  "contracts": "contracts",
+  "contracts": "src",
   "env": {
     "block": {
       "coinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -17,7 +17,7 @@
           "0xb8c059e31bcfa20b961d3f5a021b5c44d7da57ae": {
         "balance": 1000000000000000000000000000000000000000000000000000000 ,
         "nonce": "0x1cf",
-        "pkey": "0x974f963ee4571e86e5f9bc3b493e453db9c15e5bd19829a4ef9a790de0da0015", 
+        "pkey": "1234", 
         "default": true
       }
       
