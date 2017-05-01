@@ -1,6 +1,7 @@
 pragma solidity ^0.4.7;
 import "mortal.sol";
 import "Attribute.sol";
+import "Certificate.sol";
 
 contract ID is mortal{
     mapping (bytes32 => Attribute ) public attributes;
@@ -39,5 +40,13 @@ contract ID is mortal{
     
     function changeOwner(address newOwner) onlyowner {
         owner = newOwner;
+    }
+    
+    function createCertificate(string _location, string _hash, Attribute _owningAttribute) onlyowner returns (Certificate) {
+        return new Certificate(_location, _hash, _owningAttribute);
+    }
+    
+    function revokeCertificate(Certificate cert){
+        cert.revoke();
     }
 }

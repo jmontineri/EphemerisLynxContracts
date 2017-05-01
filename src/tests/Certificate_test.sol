@@ -1,6 +1,7 @@
 pragma solidity ^0.4.7;
 import "dapple/test.sol"; // virtual "dapple" package imported when `dapple test` is run
 import "Attribute.sol";
+import "Certificate.sol";
 
 contract CertificateTest is Test {
     CertificateTestProxy certProxy;

@@ -20,8 +20,8 @@ contract Attribute is Owned{
         if(_cert.owningAttribute() != this)
             throw;
         //maker sure the the one adding is the issuer
-        if(_cert.owner() != msg.sender)
-            throw;
+        //if(_cert.owner() != msg.sender)
+            //throw;
             
         certificates[_cert.owner()] = _cert;
         certificateKeys.push(_cert.owner());

@@ -1,0 +1,187 @@
+# 
+# Scenario1 
+# 
+# Created on: 3/28/2017, 9:27:00 PM 
+# 
+
+# Create contract Attribute
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: Attribute
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args:
+      - o
+      - o
+      - '0x0000000000000000000000000000000000000000'
+
+# Create contract Certificate
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: Certificate
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args:
+      - o
+      - o
+      - '0x0000000000000000000000000000000000000000'
+
+# Create contract Factory
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: Factory
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args: []
+
+# Create contract ID
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: ID
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args: []
+
+# Create contract IDController
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: IDController
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args:
+      - '0x0000000000000000000000000000000000000000'
+
+# Create contract MultiOwned
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: MultiOwned
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args:
+      - - '0x0000000000000000000000000000000000000000'
+      - 1
+
+# Create contract Owned
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: Owned
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args: []
+
+# Create contract Watchdog
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: Watchdog
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args:
+      - - '0x0000000000000000000000000000000000000000'
+      - 1
+
+# Create contract mortal
+- from: '0xdedb49385ad5b94a16f236a6890cf9e0b1e30392'
+  to: null
+  value: '0x0'
+  contract:
+    name: mortal
+    dir: src/
+    sources:
+      - Attribute.sol
+      - Certificate.sol
+      - Factory.sol
+      - ID.sol
+      - IDController.sol
+      - MultiOwned.sol
+      - Owned.sol
+      - Watchdog.sol
+      - mortal.sol
+    args: []
