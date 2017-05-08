@@ -60,15 +60,15 @@ contract IDTest is Test{
 
     function testChangeOwner(){
         id1.changeOwner(newOwner);
-        assertEq(newOwner, id.owner);
+        assertEq(newOwner, id1.owner());
     }
 
-    function testCreateCertificate{
+    function testCreateCertificate(){
         //Creating attribute and cert for that attribute
         id1.addAttribute("hello", attr);
         Certificate newCert = id1.createCertificate("created certificate", "2323", attr);
         //Making sure the new cert belongs to the ID that created it
-        assertEq(new.owner, id1);
+        assertEq(newCert.owner(), id1);
     }
 }
 //Dummy contract to set as new owner.
