@@ -16,7 +16,7 @@ contract IDTest is Test{
     
     function setUp() {
         id1 = new ID();
-        attr = new Attribute("test attr", "5678", this);
+        attr = new Attribute("test attr", "5678", id1);
         cert = new Certificate("test cert", "1234", attr);
         newOwner = new DummyOwner();
         key = sha3("hello");
