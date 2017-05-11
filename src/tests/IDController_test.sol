@@ -9,76 +9,124 @@ import "ID.sol";
 import "IDController.sol";
 
 contract IDControllerTest is Test{
-    ID id1;
-    IDController controller;
-    Attribute attr;
+    ID ownedID;
+    ID nonOwnedID;
+    
+    IDController ownedController;
+    IDController nonOwnedController;
+
+    Attribute ownedAttribute;
+    Attribute nonOwnedAttribute;
     Certificate cert;
     DummyOwner newOwner;
     Watchdog watchdog;
     bytes32 key;
     
     function setUp() {
-        id1 = new ID();
-        controller = new IDController(id1);
-        id1.changeOwner(controller);
-        attr = new Attribute("test attr", "5678", id1);
         newOwner = new DummyOwner();
+
+        ownedID = new ID();
+        ownedController = new IDController(ownedID);
+        ownedID.changeOwner(ownedController);
+
+        nonOwnedController = newOwner.createIDController();
+	nonOwnedID = newOwner.getID();
+        
+        ownedAttribute = new Attribute("test attribute", "5678", ownedID);
+        nonOwnedAttribute = new Attribute("test attribute not owned", "5676", nonOwnedID);
         watchdog = new Watchdog(new address[](0), 2);
         key = sha3("hello");
     }
-    
+
+    function testAddAttributeNotOwner(){
+        nonOwnedController.addAttribute(key, nonOwnedAttribute);
+        assertFalse(nonOwnedController.getAttribute(key) == nonOwnedAttribute);
+    }
+    function testRemoveAttributeNotOwner(){
+        //Adding attribute as owner
+        newOwner.addAttribute(key, nonOwnedAttribute);
+        assertEq(nonOwnedController.getAttribute(key), nonOwnedAttribute);
+        nonOwnedController.removeAttribute(key);
+        assertEq(nonOwnedController.getAttribute(key), nonOwnedAttribute);
+    }
+    function testDeleteIDNotOwner(){
+        nonOwnedController.deleteID();
+        assertEq(nonOwnedController.getID(), nonOwnedID);
+    }
+    function testSetWatchDogsNotOwner(){
+        nonOwnedController.setWatchDogs(watchdog);
+        assertFalse(nonOwnedController.getWatchDogs() == watchdog);
+    }
+    function testChangeOwnerNotOwner(){
+        nonOwnedController.changeOwner(this);
+        assertEq(nonOwnedController.owner(), newOwner);
+    }
+
     function testGetID(){
-        assertEq(controller.getID(), id1);
+        assertEq(ownedController.getID(), ownedID);
     }
 
     function testDeleteID(){
-        controller.deleteID();
-        //When a contract selfdestructs, all values should be set to 0. This doesn't seem to work yet.
-        //TODO: Make this work
-        assertEq(id1.owner(), 0);
-        assertEq(controller.owner(), 0);
+        ownedController.deleteID();
+        //If ID is deleted, reference to it becomes null address (eg. 0x00..0)
+        assertEq(ownedController.getID(), 0);
     }
 
     function testSetAndGetWatchDogs(){
         //setting watchdogs and checking if it has been set correctly
-        controller.setWatchDogs(watchdog);
-        assertEq(controller.getWatchDogs(), watchdog);
+        ownedController.setWatchDogs(watchdog);
+        assertEq(ownedController.getWatchDogs(), watchdog);
     }
 
     function testAddAndGetAttribute(){
         
-        //Adding attribute to ID through controller
-        controller.addAttribute(key, attr);
-        assertEq(controller.getAttribute(key), attr);
-        //Make sure ID is the owner of the attribute
-        assertEq(controller.getAttribute(key).owner(), address(id1));
+        //Adding Attribute to ID through ownedController
+        ownedController.addAttribute(key, ownedAttribute);
+        assertEq(ownedController.getAttribute(key), ownedAttribute);
+        //Make sure ID is the owner of the Attribute
+        assertEq(ownedController.getAttribute(key).owner(), address(ownedID));
     }
 
     function testAddAndRemoveAttribute(){
-        //Adding attribute to ID, again      
-        controller.addAttribute(key, attr);
-        assertEq(controller.getAttribute(key), attr);
-        //Removing attribute from ID - should not be equal any more
-        controller.removeAttribute(key);
-        assertFalse(controller.getAttribute(key) == attr);
+        //Adding Attribute to ID, again      
+        ownedController.addAttribute(key, ownedAttribute);
+        assertEq(ownedController.getAttribute(key), ownedAttribute);
+        //Removing Attribute from ID - should not be equal any more
+        ownedController.removeAttribute(key);
+        assertFalse(ownedController.getAttribute(key) == ownedAttribute);
     }
 
     function testChangeOwner(){
-        controller.changeOwner(newOwner);
-        assertEq(newOwner, controller.owner());
+        ownedController.changeOwner(newOwner);
+        assertEq(newOwner, ownedController.owner());
     }
 
     function testCreateCertificate(){
-        //Creating attribute and cert for that attribute
-        controller.addAttribute(key, attr);
-        Certificate newCert = controller.createCertificate("created certificate", "2323", attr);
+        //Creating Attribute and cert for that Attribute
+        ownedController.addAttribute(key, ownedAttribute);
+        Certificate newCert = ownedController.createCertificate("created certificate", "2323", ownedAttribute);
         //Making sure the new cert belongs to the ID that created it
-        assertEq(newCert.owner(), id1);
+        assertEq(newCert.owner(), ownedID);
         assertFalse(newCert.revoked());
-        controller.revokeCertificate(newCert);
+        ownedController.revokeCertificate(newCert);
         assertTrue(newCert.revoked());
     }
 }
 //Dummy contract to set as new owner.
 contract DummyOwner{
+    IDController idc;
+    ID id;
+    function createIDController() returns (IDController){
+	id = new ID();
+        idc = new IDController(id);
+	id.changeOwner(idc);
+	return idc;
+    }
+
+    function addAttribute(bytes32 key, Attribute ownedAttribute){
+        idc.addAttribute(key, ownedAttribute);
+    }
+    function getID() returns (ID){
+	return id;
+    }
 }
