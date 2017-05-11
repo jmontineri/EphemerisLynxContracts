@@ -28,18 +28,18 @@ contract IDTest is Test{
     }
 
     //operations that should not be possible unless you own the ID
-    function testNotOwnerAddAttribute(){
+    function testAddAttributeNotOwner(){
         notOwnedID.addAttribute(key, attr);
         assertFalse(notOwnedID.getAttribute(key) == attr);
     }
 
-    function testNotOwnerRemoveAttribute(){
+    function testRemoveAttributeNotOwner(){
         newOwner.addAttribute(key, attr2);
         notOwnedID.removeAttribute(key);
         assertEq(notOwnedID.getAttribute(key), attr2);
     }
 
-    function testNotOwnerChangeOwner(){
+    function testChangeOwnerNotOwner(){
         notOwnedID.changeOwner(this);
         assertFalse(notOwnedID.owner() == address(this));
     }
