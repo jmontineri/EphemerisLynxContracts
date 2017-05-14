@@ -59,9 +59,7 @@ contract IDTest is Test{
     }
 
     function testAddAndRemoveAttribute(){
-        //Adding attribute to ID, again      
-        ownedID.addAttribute(key, attr);
-        assertEq(ownedID.getAttribute(key), attr);
+	testAddAndGetAttribute();
         //Removing attribute from ID - should not be equal any more
         ownedID.removeAttribute(key);
         assertFalse(ownedID.getAttribute(key) == attr);
@@ -83,30 +81,12 @@ contract IDTest is Test{
 
     }
 
-    function testAddCertificateByAttribute(){
-        //Adding attribute and cert to attribute by key
-        ownedID.addAttribute(key, attr);
-        ownedID.addCertificate(attr, cert);
-        //Getting the certificate issued by this contract
-        Certificate testedCert = ownedID.getAttribute(key)
-                                    .getCertificate(this);
-        assertEq(testedCert, cert);    
-        //Test adding certificate without being owner
-        ownedID.changeOwner(newOwner);
-        Certificate cert2 = newOwner.createDummyCertificate(attr);
-        ownedID.addCertificate(attr, cert2);
-        assertEq(ownedID.getAttribute(key).getCertificate(newOwner), cert2);
-
-    }
-
     function testChangeOwner(){
         ownedID.changeOwner(newOwner);
         assertEq(newOwner, ownedID.owner());
     }
 
     function testCreateCertificate(){
-        //Creating attribute and cert for that attribute
-        ownedID.addAttribute(key, attr);
         Certificate newCert = ownedID.createCertificate("created certificate", "2323", attr);
         //Making sure the new cert belongs to the ID that created it
         assertEq(newCert.owner(), ownedID);
