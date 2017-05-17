@@ -75,8 +75,8 @@ contract IDTest is Test{
                                     .getCertificate(this);
         assertEq(testedCert, cert);
         //Test adding certificate without being owner
-        Certificate cert2 = newOwner.createDummyCertificate(ownedAttribute);
-	nonOwnedID.addAttribute(key, nonOwnedAttribute);
+        Certificate cert2 = newOwner.createDummyCertificate(nonOwnedAttribute);
+	newOwner.addAttribute(key, nonOwnedAttribute);
         nonOwnedID.addCertificate(key, cert2);
         assertFalse(nonOwnedID.getAttribute(key).getCertificate(newOwner) == cert2);
     }
@@ -95,9 +95,9 @@ contract IDTest is Test{
     function testRevokeCertificate(){
         //Creating new cert and revoking it
         Certificate newCert = ownedID.createCertificate("created certificate", "2323", ownedAttribute);
-        assertFalse(cert.revoked());
-        ownedID.revokeCertificate(cert);
-        assertTrue(cert.revoked());
+        assertFalse(newCert.revoked());
+        ownedID.revokeCertificate(newCert);
+        assertTrue(newCert.revoked());
     }
 }
 //Dummy contract to set as new owner.

@@ -111,7 +111,7 @@ contract IDControllerTest is Test{
     function testRevokeCertificate(){
         Certificate newCert = ownedController.createCertificate("created certificate", "2323", ownedAttribute);
         assertFalse(newCert.revoked());
-        ownedController.revokeCertificate(cert);
+        ownedController.revokeCertificate(newCert);
         assertTrue(newCert.revoked());
     }
 }
