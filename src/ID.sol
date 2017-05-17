@@ -22,7 +22,7 @@ contract ID is mortal{
         return attributes[key];
     }
     
-    function addCertificate(bytes32 key, Certificate cert){
+    function addCertificate(bytes32 key, Certificate cert) onlyowner{
         addCertificate(getAttribute(key), cert);
     }
     

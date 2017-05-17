@@ -83,14 +83,10 @@ contract IDControllerTest is Test{
         //Adding Attribute to ID through ownedController
         ownedController.addAttribute(key, ownedAttribute);
         assertEq(ownedController.getAttribute(key), ownedAttribute);
-        //Make sure ID is the owner of the Attribute
-        assertEq(ownedController.getAttribute(key).owner(), address(ownedID));
     }
 
     function testAddAndRemoveAttribute(){
-        //Adding Attribute to ID, again      
-        ownedController.addAttribute(key, ownedAttribute);
-        assertEq(ownedController.getAttribute(key), ownedAttribute);
+        testAddAndGetAttribute();
         //Removing Attribute from ID - should not be equal any more
         ownedController.removeAttribute(key);
         assertFalse(ownedController.getAttribute(key) == ownedAttribute);
@@ -109,6 +105,13 @@ contract IDControllerTest is Test{
         assertEq(newCert.owner(), ownedID);
         assertFalse(newCert.revoked());
         ownedController.revokeCertificate(newCert);
+        assertTrue(newCert.revoked());
+    }
+ 
+    function testRevokeCertificate(){
+        Certificate newCert = ownedController.createCertificate("created certificate", "2323", ownedAttribute);
+        assertFalse(newCert.revoked());
+        ownedController.revokeCertificate(cert);
         assertTrue(newCert.revoked());
     }
 }
