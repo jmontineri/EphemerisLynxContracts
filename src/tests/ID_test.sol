@@ -66,19 +66,20 @@ contract IDTest is Test{
         assertFalse(ownedID.getAttribute(key) == ownedAttribute);
     }
 
-    function testAddCertificateByKey(){
+    function testAddAndGetCertificate(){
         //Adding ownedAttribute and cert to attribute by key
         ownedID.addAttribute(key, ownedAttribute);
         ownedID.addCertificate(key, cert);
         //Getting the certificate issued by this contract
-        Certificate testedCert = ownedID.getAttribute(key)
-                                    .getCertificate(this);
+        Certificate testedCert = ownedID.getCertificate(key, this);
+
         assertEq(testedCert, cert);
+
         //Test adding certificate without being owner
         Certificate cert2 = newOwner.createDummyCertificate(nonOwnedAttribute);
 	newOwner.addAttribute(key, nonOwnedAttribute);
         nonOwnedID.addCertificate(key, cert2);
-        assertFalse(nonOwnedID.getAttribute(key).getCertificate(newOwner) == cert2);
+        assertFalse(nonOwnedID.getCertificate(key, newOwner) == cert2);
     }
 
     function testChangeOwner(){

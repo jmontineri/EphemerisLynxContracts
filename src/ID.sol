@@ -7,10 +7,10 @@ contract ID is mortal{
     mapping (bytes32 => Attribute ) public attributes;
     bytes32[] public attributesKeys;
 
-    event ReturnCertificate{
+    event ReturnCertificate(
         address _from, 
         address _certAddress
-    }
+    );
 
     function addAttribute(bytes32 key, Attribute attr) onlyowner returns (bool){
         
@@ -37,7 +37,7 @@ contract ID is mortal{
         attr.addCertificate(cert);
     }
 
-    function getCertificate(bytes32 key, address issuer){
+    function getCertificate(bytes32 key, address issuer) returns (Certificate){
         return getAttribute(key).getCertificate(issuer);
     }
 
