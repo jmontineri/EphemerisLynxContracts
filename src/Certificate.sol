@@ -7,6 +7,7 @@ contract Certificate is Owned{
     string public hash;
     bool public revoked = false;
     Attribute public owningAttribute;
+    event Revoked(address _sender);
     //TODO: add expiration
     
     function Certificate(string _location, string _hash, Attribute _owningAttribute){
@@ -17,5 +18,6 @@ contract Certificate is Owned{
     
     function revoke() onlyowner {
         revoked = true;
+        Revoked(msg.sender);
     }
 }
