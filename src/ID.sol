@@ -37,7 +37,7 @@ contract ID is mortal{
         attr.addCertificate(cert);
     }
 
-    function getCertificate(bytes32 key, address issuer) returns (Certificate){
+    function getCertificate(bytes32 key, address issuer) constant returns (Certificate){
         return getAttribute(key).getCertificate(issuer);
     }
 
