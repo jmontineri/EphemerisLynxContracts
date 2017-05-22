@@ -103,9 +103,6 @@ contract IDControllerTest is Test{
         Certificate newCert = ownedController.createCertificate("created certificate", "2323", ownedAttribute);
         //Making sure the new cert belongs to the ID that created it
         assertEq(newCert.owner(), ownedID);
-        assertFalse(newCert.revoked());
-        ownedController.revokeCertificate(newCert);
-        assertTrue(newCert.revoked());
     }
  
     function testRevokeCertificate(){

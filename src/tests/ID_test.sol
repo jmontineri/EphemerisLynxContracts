@@ -46,12 +46,9 @@ contract IDTest is Test{
     }
 
     function testAddAndGetAttribute(){
-        
         //Adding ownedAttribute to ID        
         ownedID.addAttribute(key, ownedAttribute);
         assertEq(ownedID.getAttribute(key), ownedAttribute);
-        //Make sure ID is the owner of the ownedAttribute
-        assertEq(ownedID.getAttribute(key).owner(), address(ownedID));
     }
 
     function testThrowAddAttribute(){

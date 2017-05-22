@@ -7,11 +7,6 @@ contract ID is mortal{
     mapping (bytes32 => Attribute ) public attributes;
     bytes32[] public attributesKeys;
 
-    event ReturnCertificate(
-        address _from, 
-        address _certAddress
-    );
-
     function addAttribute(bytes32 key, Attribute attr) onlyowner returns (bool){
         
         //if you are not the owner of the attribute you can't add it to your id
@@ -52,9 +47,8 @@ contract ID is mortal{
     }
     
     function createCertificate(string _location, string _hash, Attribute _owningAttribute) onlyowner returns (Certificate) {
-        Certificate cert = new Certificate(_location, _hash, _owningAttribute);
-        ReturnCertificate(msg.sender, address(cert));
-        return cert;
+        return new Certificate(_location, _hash, _owningAttribute);
+    
     }
     
     function revokeCertificate(Certificate cert){
