@@ -32,10 +32,6 @@ contract ID is mortal{
         attr.addCertificate(cert);
     }
 
-    function getCertificate(bytes32 key, address issuer) constant returns (Certificate){
-        return getAttribute(key).getCertificate(issuer);
-    }
-
     function removeAttribute(bytes32 key) onlyowner{
         delete attributes[key];
     }
