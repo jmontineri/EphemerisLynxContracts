@@ -22,7 +22,7 @@ contract ID is mortal{
         return attributes[key];
     }
     
-    function addCertificate(bytes32 key, Certificate cert){
+    function addCertificate(bytes32 key, Certificate cert) onlyowner{
         addCertificate(getAttribute(key), cert);
     }
     
@@ -44,6 +44,7 @@ contract ID is mortal{
     
     function createCertificate(string _location, string _hash, Attribute _owningAttribute) onlyowner returns (Certificate) {
         return new Certificate(_location, _hash, _owningAttribute);
+    
     }
     
     function revokeCertificate(Certificate cert){

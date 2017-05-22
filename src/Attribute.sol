@@ -27,7 +27,7 @@ contract Attribute is Owned{
         certificateKeys.push(_cert.owner());
     }
     
-    function getCertificate(address _issuer) returns (Certificate){
+    function getCertificate(address _issuer) constant returns (Certificate){
         return certificates[_issuer];
     }
 }

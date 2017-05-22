@@ -22,7 +22,7 @@ contract IDController is Owned {
         return id.addAttribute(key, attr);
     }
 
-    function getAttribute(bytes32 key) returns(Attribute) {
+    function getAttribute(bytes32 key) constant returns(Attribute) {
         return id.getAttribute(key);
     }
 
@@ -31,11 +31,11 @@ contract IDController is Owned {
         selfdestruct(owner);
     }
     
-    function getWatchDogs() returns (Watchdog){
+    function getWatchDogs() constant returns (Watchdog){
         return watchdogs;
     }
     
-    function getID() returns (ID){
+    function getID() constant returns (ID){
         return id;
     }
     
