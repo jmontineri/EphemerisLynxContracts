@@ -1,0 +1,3 @@
+[submodule "eth-abi-code-gen"]
+	path = eth-abi-code-gen
+	url = https://ephemeris.visualstudio.com/Ephemeris%20ID/_git/eth-abi-code-gen

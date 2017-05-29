@@ -49,10 +49,12 @@ contract IDControllerTest is Test{
         nonOwnedController.removeAttribute(key);
         assertEq(nonOwnedController.getAttribute(key), nonOwnedAttribute);
     }
+    /*
     function testDeleteIDNotOwner(){
         nonOwnedController.deleteID();
         assertEq(nonOwnedController.getID(), nonOwnedID);
     }
+    */
     function testSetWatchDogsNotOwner(){
         nonOwnedController.setWatchDogs(watchdog);
         assertFalse(nonOwnedController.getWatchDogs() == watchdog);
@@ -65,12 +67,13 @@ contract IDControllerTest is Test{
     function testGetID(){
         assertEq(ownedController.getID(), ownedID);
     }
-
+    /*
     function testDeleteID(){
         ownedController.deleteID();
         //If ID is deleted, reference to it becomes null address (eg. 0x00..0)
         assertEq(ownedController.getID(), 0);
     }
+    */
 
     function testSetAndGetWatchDogs(){
         //setting watchdogs and checking if it has been set correctly
