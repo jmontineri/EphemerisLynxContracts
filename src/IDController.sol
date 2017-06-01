@@ -42,6 +42,14 @@ contract IDController is Owned {
     function createCertificate(string _location, string _hash, Attribute _owningAttribute) onlyowner returns (Certificate) {
         return id.createCertificate(_location, _hash, _owningAttribute);
     }
+
+    function addCertificate(bytes32 key, Certificate cert) onlyowner{
+        id.addCertificate(key, cert);
+    }
+    
+    function addCertificate(Attribute attr, Certificate cert) onlyowner{
+    	id.addCertificate(attr, cert);
+    }
     
     function revokeCertificate(Certificate cert){
         id.revokeCertificate(cert);

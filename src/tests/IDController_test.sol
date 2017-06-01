@@ -30,10 +30,11 @@ contract IDControllerTest is Test{
         ownedID.changeOwner(ownedController);
 
         nonOwnedController = newOwner.createIDController();
-	nonOwnedID = newOwner.getID();
+        nonOwnedID = newOwner.getID();
         
         ownedAttribute = new Attribute("test attribute", "5678", ownedID);
         nonOwnedAttribute = new Attribute("test attribute not owned", "5676", nonOwnedID);
+        cert = new Certificate ("test certificate please ignore", "1234", ownedAttribute);
         watchdog = new Watchdog(new address[](0), 2);
         key = sha3("hello");
     }
@@ -42,6 +43,7 @@ contract IDControllerTest is Test{
         nonOwnedController.addAttribute(key, nonOwnedAttribute);
         assertFalse(nonOwnedController.getAttribute(key) == nonOwnedAttribute);
     }
+
     function testRemoveAttributeNotOwner(){
         //Adding attribute as owner
         newOwner.addAttribute(key, nonOwnedAttribute);
@@ -59,6 +61,7 @@ contract IDControllerTest is Test{
         nonOwnedController.setWatchDogs(watchdog);
         assertFalse(nonOwnedController.getWatchDogs() == watchdog);
     }
+
     function testChangeOwnerNotOwner(){
         nonOwnedController.changeOwner(this);
         assertEq(nonOwnedController.owner(), newOwner);
@@ -74,6 +77,16 @@ contract IDControllerTest is Test{
         assertEq(ownedController.getID(), 0);
     }
     */
+
+    function testAddAndGetCertificate(){
+        //Adding ownedAttribute and cert to attribute by key
+        ownedController.addAttribute(key, ownedAttribute);
+        ownedController.addCertificate(key, cert);
+        //Getting the certificate issued by this contract
+        Certificate testedCert = ownedController.getAttribute(key).getCertificate(this);
+
+        assertEq(testedCert, cert);
+    }
 
     function testSetAndGetWatchDogs(){
         //setting watchdogs and checking if it has been set correctly
@@ -119,17 +132,23 @@ contract IDControllerTest is Test{
 contract DummyOwner{
     IDController idc;
     ID id;
+
     function createIDController() returns (IDController){
-	id = new ID();
+        id = new ID();
         idc = new IDController(id);
-	id.changeOwner(idc);
-	return idc;
+        id.changeOwner(idc);
+        return idc;
+    }
+
+    function createDummyCertificate(Attribute ownedAttribute) returns (Certificate){
+        return new Certificate("test cert 2", "1234", ownedAttribute);
     }
 
     function addAttribute(bytes32 key, Attribute ownedAttribute){
         idc.addAttribute(key, ownedAttribute);
     }
+
     function getID() returns (ID){
-	return id;
+        return id;
     }
 }

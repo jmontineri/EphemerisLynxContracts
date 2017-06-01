@@ -20,7 +20,7 @@ contract IDTest is Test{
         newOwner = new DummyOwner();
         ownedID = new ID();
         nonOwnedID = newOwner.createID();
-	assertEq(nonOwnedID.owner(), newOwner);
+        assertEq(nonOwnedID.owner(), newOwner);
         ownedAttribute = new Attribute("test attr", "5678", ownedID);
         nonOwnedAttribute = new Attribute("test ownedAttribute", "5678", nonOwnedID);
         cert = new Certificate("test cert", "1234", ownedAttribute);
@@ -57,7 +57,7 @@ contract IDTest is Test{
     }
 
     function testAddAndRemoveAttribute(){
-	testAddAndGetAttribute();
+        testAddAndGetAttribute();
         //Removing ownedAttribute from ID - should not be equal any more
         ownedID.removeAttribute(key);
         assertFalse(ownedID.getAttribute(key) == ownedAttribute);
@@ -71,12 +71,6 @@ contract IDTest is Test{
         Certificate testedCert = ownedID.getAttribute(key).getCertificate(this);
 
         assertEq(testedCert, cert);
-
-        //Test adding certificate without being owner
-        Certificate cert2 = newOwner.createDummyCertificate(nonOwnedAttribute);
-	newOwner.addAttribute(key, nonOwnedAttribute);
-        nonOwnedID.addCertificate(key, cert2);
-        assertFalse(nonOwnedID.getAttribute(key).getCertificate(newOwner) == cert2);
     }
 
     function testChangeOwner(){

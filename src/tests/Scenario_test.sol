@@ -101,7 +101,7 @@ contract ScenarioTest is Test {
         log_named_string("status", "Certificate cert1 was created for attr1 by ID2");
         
         //add the certificate to the attribute
-        id1.addCertificate(attr1, cert1);
+        idCtrl1.addCertificate(attr1, cert1);
         
         assertEq(cert1, attr1.getCertificate(address(id2)));
         
@@ -115,7 +115,7 @@ contract ScenarioTest is Test {
         log_named_string("status", "Certificate cert2 was created for attr2 by ID1");
         
         //add the certificate to the attribute
-        id2.addCertificate(attr2, cert2);
+        idCtrl2.addCertificate(attr2, cert2);
         
         assertEq(cert2, attr2.getCertificate(address(id1)));
         
