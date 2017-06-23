@@ -26,6 +26,14 @@ contract IDController is Owned {
         return id.getAttribute(key);
     }
 
+    function attributeCount() constant returns(uint256) {
+        return id.attributeCount();
+    }
+
+    function getAttributeKey(uint256 i) returns (bytes32){
+        return id.attributesKeys(i);
+    }
+
     function deleteID() onlyowner {
         id.kill();
         selfdestruct(owner);
@@ -48,7 +56,7 @@ contract IDController is Owned {
     }
     
     function addCertificate(Attribute attr, Certificate cert) onlyowner{
-    	id.addCertificate(attr, cert);
+        id.addCertificate(attr, cert);
     }
     
     function revokeCertificate(Certificate cert){

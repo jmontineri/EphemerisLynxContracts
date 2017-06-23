@@ -13,6 +13,10 @@ contract ID is mortal{
         address _certAddress
     );
 
+    function attributeCount() constant returns (uint256){
+        return attributesKeys.length;
+    }
+
     function addAttribute(bytes32 key, Attribute attr) onlyowner returns (bool){
         
         //if you are not the owner of the attribute you can't add it to your id
@@ -40,6 +44,12 @@ contract ID is mortal{
 
     function removeAttribute(bytes32 key) onlyowner{
         delete attributes[key];
+        for(uint i = 0; i < attributesKeys.length; i++){
+                if (attributesKeys[i] == key)
+            {
+                delete attributesKeys[i];
+            }
+        }
     }
 
     //function removeAllAttributes()
@@ -50,7 +60,7 @@ contract ID is mortal{
     
     function createCertificate(string _location, string _hash, Attribute _owningAttribute) onlyowner returns (Certificate) {
         Certificate cert = new Certificate(_location, _hash, _owningAttribute);
-        ReturnCertificate(msg.sender, address(cert));
+        ReturnCertificate(msg.sender, _owningAttribute, address(cert));
         return cert;
     }
     

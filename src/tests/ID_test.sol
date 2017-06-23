@@ -24,7 +24,7 @@ contract IDTest is Test{
         ownedAttribute = new Attribute("test attr", "5678", ownedID);
         nonOwnedAttribute = new Attribute("test ownedAttribute", "5678", nonOwnedID);
         cert = new Certificate("test cert", "1234", ownedAttribute);
-        key = sha3("hello");
+        key = "Test Key";
 
     }
 
@@ -46,9 +46,14 @@ contract IDTest is Test{
     }
 
     function testAddAndGetAttribute(){
+
+        assertEq(ownedID.attributeCount(), 0);
+
         //Adding ownedAttribute to ID        
         ownedID.addAttribute(key, ownedAttribute);
         assertEq(ownedID.getAttribute(key), ownedAttribute);
+
+        assertEq(ownedID.attributeCount(), 1);
     }
 
     function testThrowAddAttribute(){
@@ -61,6 +66,8 @@ contract IDTest is Test{
         //Removing ownedAttribute from ID - should not be equal any more
         ownedID.removeAttribute(key);
         assertFalse(ownedID.getAttribute(key) == ownedAttribute);
+
+        //assertEq(ownedID.attributeCount(), 0);
     }
 
     function testAddAndGetCertificate(){

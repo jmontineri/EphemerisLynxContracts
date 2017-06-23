@@ -15,6 +15,10 @@ contract Attribute is Owned{
         owner = _owner;
     }
     
+    function certificateCount() constant returns (uint256){
+        return certificateKeys.length;
+    }
+    
     function addCertificate(Certificate _cert) onlyowner{
         //check the certificate is really for this id
         if(_cert.owningAttribute() != this)
