@@ -2,10 +2,11 @@ pragma solidity ^0.4.7;
 import "mortal.sol";
 import "Attribute.sol";
 import "Certificate.sol";
+import "Storage.sol";
 
 contract ID is mortal{
-    mapping (bytes32 => Attribute ) public attributes;
-    bytes32[] public attributesKeys;
+
+    Storage attributeStorage;
 
     event ReturnCertificate(
         address indexed _issuingAddress, 
@@ -13,8 +14,12 @@ contract ID is mortal{
         address _certAddress
     );
 
+    function ID(){
+        attributeStorage = new Storage();
+    }
+
     function attributeCount() constant returns (uint256){
-        return attributesKeys.length;
+        return attributeStorage.length();
     }
 
     function addAttribute(bytes32 key, Attribute attr) onlyowner returns (bool){
@@ -23,13 +28,15 @@ contract ID is mortal{
         if( attr.owner() != address(this))
             throw;
         
-        attributes[key] = attr;
-        attributesKeys.push(key);
-        return attributes[key] == attr;
+        attributeStorage.add(key, attr);
+        return attributeStorage.getByKey(key) == address(attr);
     }
 
     function getAttribute(bytes32 key) constant returns (Attribute){
-        return attributes[key];
+        return Attribute(attributeStorage.getByKey(key));
+    }
+    function getAttributeByIndex(uint256 index) constant returns (Attribute){
+        return Attribute(attributeStorage.getByIndex(index));
     }
     
     function addCertificate(bytes32 key, Certificate cert) onlyowner{
@@ -43,13 +50,7 @@ contract ID is mortal{
     }
 
     function removeAttribute(bytes32 key) onlyowner{
-        delete attributes[key];
-        for(uint i = 0; i < attributesKeys.length; i++){
-                if (attributesKeys[i] == key)
-            {
-                delete attributesKeys[i];
-            }
-        }
+        attributeStorage.remove(key);
     }
 
     //function removeAllAttributes()
