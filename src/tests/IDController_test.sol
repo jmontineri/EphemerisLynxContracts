@@ -99,7 +99,6 @@ contract IDControllerTest is Test{
         //Adding Attribute to ID through ownedController
         ownedController.addAttribute(key, ownedAttribute);
         assertEq(ownedController.attributeCount(), 1);
-        log_bytes32(ownedController.getAttributeKey(0));
         assertEq(ownedController.getAttribute(key), ownedAttribute);
     }
 

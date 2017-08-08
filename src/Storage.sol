@@ -44,18 +44,18 @@ contract Storage is Owned{
         return nodes[key].pointer;
     }
 
-    function getByIndex(int index) constant returns(address){
+    function getByIndex(uint256 index) constant returns(address){
         bytes32 current = "LIST_HEAD";
 
-        for(int i = 0; i <= index; i++){
+        for(uint256 i = 0; i <= index; i++){
             current = nodes[current].next;
         }
 
         return nodes[current].pointer;
     }
 
-    function length() constant returns(int){
-        int count = 0;
+    function length() constant returns(uint256){
+        uint256 count = 0;
 
         for(bytes32 current = nodes["LIST_HEAD"].next; current != "LIST_TAIL"; current = nodes[current].next){
             count++;

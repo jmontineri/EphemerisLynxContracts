@@ -30,10 +30,6 @@ contract IDController is Owned {
         return id.attributeCount();
     }
 
-    function getAttributeKey(uint256 i) returns (bytes32){
-        return id.attributesKeys(i);
-    }
-
     function deleteID() onlyowner {
         id.kill();
         selfdestruct(owner);
