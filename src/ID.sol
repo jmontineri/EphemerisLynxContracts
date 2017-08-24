@@ -2,11 +2,11 @@ pragma solidity ^0.4.7;
 import "mortal.sol";
 import "Attribute.sol";
 import "Certificate.sol";
-import "Storage.sol";
+import "DLinkedListStorage.sol";
 
 contract ID is mortal{
 
-    Storage attributeStorage;
+    DLinkedListStorage public attributeStorage;
 
     event ReturnCertificate(
         address indexed _issuingAddress, 
@@ -15,11 +15,11 @@ contract ID is mortal{
     );
 
     function ID(){
-        attributeStorage = new Storage();
+        attributeStorage = new DLinkedListStorage();
     }
 
     function attributeCount() constant returns (uint256){
-        return attributeStorage.length();
+        return attributeStorage.item_count();
     }
 
     function addAttribute(bytes32 key, Attribute attr) onlyowner returns (bool){
@@ -35,10 +35,7 @@ contract ID is mortal{
     function getAttribute(bytes32 key) constant returns (Attribute){
         return Attribute(attributeStorage.getByKey(key));
     }
-    function getAttributeByIndex(uint256 index) constant returns (Attribute){
-        return Attribute(attributeStorage.getByIndex(index));
-    }
-    
+
     function addCertificate(bytes32 key, Certificate cert) onlyowner{
         addCertificate(getAttribute(key), cert);
     }

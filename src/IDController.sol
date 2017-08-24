@@ -26,6 +26,11 @@ contract IDController is Owned {
         return id.getAttribute(key);
     }
 
+    //Exposed to allow getting all attributes due to an EVM limitation
+    function attributeStorage() constant returns(address){
+        return id.attributeStorage();
+    }
+
     function attributeCount() constant returns(uint256) {
         return id.attributeCount();
     }
