@@ -26,12 +26,13 @@ contract IDController is Owned {
         return id.getAttribute(key);
     }
 
-    function attributeCount() constant returns(uint256) {
-        return id.attributeCount();
+    //Exposed to allow getting all attributes due to an EVM limitation
+    function attributeStorage() constant returns(address){
+        return id.attributeStorage();
     }
 
-    function getAttributeKey(uint256 i) returns (bytes32){
-        return id.attributesKeys(i);
+    function attributeCount() constant returns(uint256) {
+        return id.attributeCount();
     }
 
     function deleteID() onlyowner {

@@ -29,7 +29,6 @@ contract AttributeTest is Test {
         assertEq(attr.getCertificate(attrProxy), cert);
 
         assertEq(attr.certificateCount(), 1);
-        log_address(attr.certificateKeys(0));
     }
 }
 
