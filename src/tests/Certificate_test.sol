@@ -7,21 +7,21 @@ contract CertificateTest is Test {
     CertificateTestProxy certProxy;
     Attribute attr;
     Certificate cert;
-    
+
     function setUp() {
-        attr = new Attribute("neverland", "5678", address(this));
+        attr = new Attribute("neverland", "description", "5678", address(this));
         certProxy = new CertificateTestProxy(attr);
         cert = certProxy.cert();
     }
-    
+
     function testRevoke(){
         //test initial state
         assertFalse(cert.revoked());
-        
+
         //revoke directly from this contract should fail
         cert.revoke();
         assertFalse(cert.revoked());
-        
+
         //revoking from the proxy should work
         certProxy.revoke();
         assertTrue(cert.revoked());
@@ -31,11 +31,11 @@ contract CertificateTest is Test {
 //This proxy contract will act as a second actor calling the watchdog contract
 contract CertificateTestProxy{
     Certificate public cert;
-    
+
     function CertificateTestProxy(Attribute attr){
         cert = new Certificate("somewhere", "1234", attr);
     }
-    
+
     function revoke(){
         cert.revoke();
     }

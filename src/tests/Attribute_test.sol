@@ -6,16 +6,16 @@ contract AttributeTest is Test {
     Certificate cert;
     Attribute attr;
     AttributeTestProxy attrProxy;
-    
+
     function setUp(){
         attrProxy = new AttributeTestProxy();
-        attr = new Attribute("hogwarts", "1234", attrProxy);
+        attr = new Attribute("hogwarts", "description", "1234", attrProxy);
         attrProxy.setAttr(attr);
         cert = attrProxy.createCertificate();
     }
-    
+
     function testAddAndGetCertificate(){
-        
+
         log_address(cert.owner());
         assertEq(attr.certificateCount(), 0);
 
@@ -23,7 +23,7 @@ contract AttributeTest is Test {
         attr.addCertificate(cert);
         assertFalse(attr.getCertificate(this) == cert);
 
-        
+
         //add the certificate as the owner of the attribute
         attrProxy.addCertificate(cert);
         assertEq(attr.getCertificate(attrProxy), cert);
@@ -37,20 +37,20 @@ contract AttributeTest is Test {
 contract AttributeTestProxy{
     Attribute public attr;
     Certificate public cert;
-    
+
     function createCertificate() returns (Certificate){
-        //The certificate needs to be owned by the message sender so that the 
+        //The certificate needs to be owned by the message sender so that the
         //contract accepts it
         if(address(attr) == 0)
             throw;
-            
+
         return cert = new Certificate("over the rainbow", "5678", attr);
     }
 
     function setAttr(Attribute _attr){
         attr = _attr;
     }
-    
+
     function addCertificate(Certificate _cert){
         attr.addCertificate(_cert);
     }

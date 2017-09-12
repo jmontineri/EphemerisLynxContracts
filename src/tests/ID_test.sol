@@ -15,27 +15,26 @@ contract IDTest is Test{
     Certificate cert;
     DummyOwner newOwner;
     bytes32 key;
-    
+
     function setUp() {
         newOwner = new DummyOwner();
         ownedID = new ID();
         nonOwnedID = newOwner.createID();
         assertEq(nonOwnedID.owner(), newOwner);
-        ownedAttribute = new Attribute("test attr", "5678", ownedID);
-        nonOwnedAttribute = new Attribute("test ownedAttribute", "5678", nonOwnedID);
-        cert = new Certificate("test cert", "1234", ownedAttribute);
         key = "Test Key";
-
+        ownedAttribute = new Attribute("test attr", key, "5678", ownedID);
+        nonOwnedAttribute = new Attribute("test ownedAttribute", key, "5678", nonOwnedID);
+        cert = new Certificate("test cert", "1234", ownedAttribute);
     }
 
     //operations that should not be possible unless you own the ID
     function testAddAttributeNotOwner(){
-        nonOwnedID.addAttribute(key, ownedAttribute);
+        nonOwnedID.addAttribute(ownedAttribute);
         assertFalse(nonOwnedID.getAttribute(key) == ownedAttribute);
     }
 
     function testRemoveAttributeNotOwner(){
-        newOwner.addAttribute(key, nonOwnedAttribute);
+        newOwner.addAttribute(nonOwnedAttribute);
         nonOwnedID.removeAttribute(key);
         assertEq(nonOwnedID.getAttribute(key), nonOwnedAttribute);
     }
@@ -49,8 +48,8 @@ contract IDTest is Test{
 
         assertEq(ownedID.attributeCount(), 0);
 
-        //Adding ownedAttribute to ID        
-        ownedID.addAttribute(key, ownedAttribute);
+        //Adding ownedAttribute to ID
+        ownedID.addAttribute(ownedAttribute);
         assertEq(ownedID.getAttribute(key), ownedAttribute);
 
         assertEq(ownedID.attributeCount(), 1);
@@ -58,7 +57,7 @@ contract IDTest is Test{
 
     function testThrowAddAttribute(){
         //Adding an ownedAttribute with the wrong owner should result in a failure
-        ownedID.addAttribute(key, nonOwnedAttribute);
+        ownedID.addAttribute(nonOwnedAttribute);
     }
 
     function testAddAndRemoveAttribute(){
@@ -72,7 +71,7 @@ contract IDTest is Test{
 
     function testAddAndGetCertificate(){
         //Adding ownedAttribute and cert to attribute by key
-        ownedID.addAttribute(key, ownedAttribute);
+        ownedID.addAttribute(ownedAttribute);
         ownedID.addCertificate(key, cert);
         //Getting the certificate issued by this contract
         Certificate testedCert = ownedID.getAttribute(key).getCertificate(this);
@@ -112,7 +111,7 @@ contract DummyOwner{
         return id;
     }
 
-    function addAttribute(bytes32 key, Attribute ownedAttribute){
-        id.addAttribute(key, ownedAttribute);
+    function addAttribute(Attribute ownedAttribute){
+        id.addAttribute(ownedAttribute);
     }
 }

@@ -11,7 +11,7 @@ import "IDController.sol";
 contract IDControllerTest is Test{
     ID ownedID;
     ID nonOwnedID;
-    
+
     IDController ownedController;
     IDController nonOwnedController;
 
@@ -21,7 +21,7 @@ contract IDControllerTest is Test{
     DummyOwner newOwner;
     Watchdog watchdog;
     bytes32 key;
-    
+
     function setUp() {
         newOwner = new DummyOwner();
 
@@ -31,22 +31,22 @@ contract IDControllerTest is Test{
 
         nonOwnedController = newOwner.createIDController();
         nonOwnedID = newOwner.getID();
-        
-        ownedAttribute = new Attribute("test attribute", "5678", ownedID);
-        nonOwnedAttribute = new Attribute("test attribute not owned", "5676", nonOwnedID);
+
+        key = sha3("hello");
+        ownedAttribute = new Attribute("test attribute", key, "5678", ownedID);
+        nonOwnedAttribute = new Attribute("test attribute not owned", key, "5676", nonOwnedID);
         cert = new Certificate ("test certificate please ignore", "1234", ownedAttribute);
         watchdog = new Watchdog(new address[](0), 2);
-        key = sha3("hello");
     }
 
     function testAddAttributeNotOwner(){
-        nonOwnedController.addAttribute(key, nonOwnedAttribute);
+        nonOwnedController.addAttribute(nonOwnedAttribute);
         assertFalse(nonOwnedController.getAttribute(key) == nonOwnedAttribute);
     }
 
     function testRemoveAttributeNotOwner(){
         //Adding attribute as owner
-        newOwner.addAttribute(key, nonOwnedAttribute);
+        newOwner.addAttribute(nonOwnedAttribute);
         assertEq(nonOwnedController.getAttribute(key), nonOwnedAttribute);
         nonOwnedController.removeAttribute(key);
         assertEq(nonOwnedController.getAttribute(key), nonOwnedAttribute);
@@ -80,7 +80,7 @@ contract IDControllerTest is Test{
 
     function testAddAndGetCertificate(){
         //Adding ownedAttribute and cert to attribute by key
-        ownedController.addAttribute(key, ownedAttribute);
+        ownedController.addAttribute(ownedAttribute);
         ownedController.addCertificate(key, cert);
         //Getting the certificate issued by this contract
         Certificate testedCert = ownedController.getAttribute(key).getCertificate(this);
@@ -95,9 +95,9 @@ contract IDControllerTest is Test{
     }
 
     function testAddAndGetAttribute(){
-        
+
         //Adding Attribute to ID through ownedController
-        ownedController.addAttribute(key, ownedAttribute);
+        ownedController.addAttribute(ownedAttribute);
         assertEq(ownedController.attributeCount(), 1);
         log_bytes32(ownedController.getAttributeKey(0));
         assertEq(ownedController.getAttribute(key), ownedAttribute);
@@ -117,12 +117,12 @@ contract IDControllerTest is Test{
 
     function testCreateCertificate(){
         //Creating Attribute and cert for that Attribute
-        ownedController.addAttribute(key, ownedAttribute);
+        ownedController.addAttribute(ownedAttribute);
         Certificate newCert = ownedController.createCertificate("created certificate", "2323", ownedAttribute);
         //Making sure the new cert belongs to the ID that created it
         assertEq(newCert.owner(), ownedID);
     }
- 
+
     function testRevokeCertificate(){
         Certificate newCert = ownedController.createCertificate("created certificate", "2323", ownedAttribute);
         assertFalse(newCert.revoked());
@@ -146,8 +146,8 @@ contract DummyOwner{
         return new Certificate("test cert 2", "1234", ownedAttribute);
     }
 
-    function addAttribute(bytes32 key, Attribute ownedAttribute){
-        idc.addAttribute(key, ownedAttribute);
+    function addAttribute(Attribute ownedAttribute){
+        idc.addAttribute(ownedAttribute);
     }
 
     function getID() returns (ID){
