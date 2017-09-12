@@ -6,6 +6,11 @@ mkdir cs
 
 cd src
 
+echo "Installing solc v0.4.11 from GitHub"
+wget https://github.com/ethereum/solidity/releases/download/v0.4.11/solc-static-linux
+mv ./solc-static-linux /usr/bin/solc
+chmod +x /usr/bin/solc
+
 echo "Generating bytecode with solc..."
 solc -o ../bin --bin *.sol
 echo "Generating contract ABIs with solc..."
