@@ -6,6 +6,7 @@ import "Attribute.sol";
 
 contract IDController is Owned {
     ID id;
+    Registry registry;
     Watchdog watchdogs;
 
     function IDController(ID _id) {
@@ -65,6 +66,10 @@ contract IDController is Owned {
 
     function setWatchDogs(Watchdog newContract) onlyowner {
         watchdogs = newContract;
+    }
+
+    function takeOwnership() onlyowner{
+        registry.SetAddress(this);
     }
 
     function changeOwner(address newOwner) onlyowner {
