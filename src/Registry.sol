@@ -1,12 +1,13 @@
 pragma solidity ^0.4.7;
 import "ID.sol";
 import "IDController.sol";
+import "Owned.sol";
 
-contract Registry {
+contract Registry is Owned{
   mapping (address => address) public ids;
   mapping (address => address) reverseIds;         
 
-  function SetAddress(ID idAdress){
+  function setAddress(ID idAdress){
 
     address ownerAddress = IDController(idAdress.owner()).owner();
     if(msg.sender == ownerAddress){

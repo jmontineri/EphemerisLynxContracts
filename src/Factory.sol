@@ -19,7 +19,7 @@ contract Factory is Owned {
 
         //Fire event returning the address of the IDController
         ReturnIDController(msg.sender, idController);
-        registry.SetAddress(ID);
+        registry.setAddress(newID);
         return idController;
     }
 
