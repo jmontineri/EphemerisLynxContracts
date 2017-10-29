@@ -7,7 +7,11 @@ import "Registry.sol";
 contract Factory is Owned {
 
     event ReturnIDController(address indexed _from, address _controllerAddress);
-    Registry registry;
+    Registry public registry;
+
+    function Factory(){
+        setRegistry(new Registry());
+    }
 
     function setRegistry (Registry newRegistry) onlyowner{
         registry = newRegistry;
@@ -24,9 +28,13 @@ contract Factory is Owned {
     }
 
     function createIDController (ID id, address sender) private returns (IDController){
+
         IDController idController = new IDController(id);
         id.changeOwner(idController);
+
         idController.changeOwner(sender);
+        idController.setRegistry(registry);
+
         return idController;
     }
 }
