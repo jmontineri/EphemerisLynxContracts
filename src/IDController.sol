@@ -14,7 +14,7 @@ contract IDController is Owned {
         id = _id;
     }
 
-    function changeRegistry (Registry newRegistry) onlyowner{
+    function setRegistry (Registry newRegistry) onlyowner{
         registry = newRegistry;
     }
 
