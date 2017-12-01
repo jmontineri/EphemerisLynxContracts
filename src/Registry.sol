@@ -8,15 +8,14 @@ contract Registry is Owned{
   mapping (address => address) public ids;
   mapping (address => address) reverseIds;         
 
-  function setAddress(ID idAdress){
+  function setAddress(ID idAddress){
 
-    address ownerAddress = IDController(idAdress.owner()).owner();
-    address IDCAddress = idAdress.owner();
+    address ownerAddress = IDController(idAddress.owner()).owner();
     if(tx.origin == ownerAddress){
-      address previousOwner = reverseIds[address(idAdress)];
-      reverseIds[address(idAdress)] = tx.origin;
+      address previousOwner = reverseIds[address(idAddress)];
+      reverseIds[address(idAddress)] = tx.origin;
       delete ids[previousOwner];
-      ids[tx.origin] = address(idAdress);
+      ids[tx.origin] = address(idAddress);
     }
   }
 }
